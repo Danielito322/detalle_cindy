@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Aniversario 💕</title>
+    
+    <!-- Google Fonts para tipografías románticas -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes:wght@400&family=Poppins:wght@300;400;600&family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* === RESET Y CONFIGURACIÓN BASE === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            color: #fff;
+        }
+
+        /* === FONDO ESTRELLADO ANIMADO === */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+
+        .star:nth-child(2n) {
+            animation-delay: 1s;
+        }
+
+        .star:nth-child(3n) {
+            animation-delay: 2s;
+        }
+
+        .shooting-star {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, #fff, transparent);
+            animation: shoot 3s linear infinite;
+        }
+
+        /* === PANTALLA DE INICIO === */
+        .overlay-inicio {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 26, 46, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .overlay-inicio.oculto {
+            opacity: 0;
+            transform: scale(0.9);
+            pointer-events: none;
+        }
+
+        .texto-inicio {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(2rem, 8vw, 4rem);
+            color: #ff6b9d;
+            text-align: center;
+            animation: pulsoSuave 2s infinite ease-in-out;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255, 107, 157, 0.5);
+        }
+
+        /* === MENSAJE PRINCIPAL === */
+        .mensaje-principal {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            z-index: 10;
+            position: relative;
+        }
+
+        .titulo-aniversario {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            color: #ff6b9d;
+            text-shadow: 0 0 30px rgba(255, 107, 157, 0.6);
+            animation: aparicionSuave 2s ease-out forwards;
+            opacity: 0;
+            margin-bottom: 2rem;
+        }
+
+        /* === RAMO REALISTA === */
+        .contenedor-ramo {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+            z-index: 10;
+            position: relative;
+        }
+
+        .ramo {
+            max-width: 300px;
+            width: 80%;
+            height: auto;
+            filter: drop-shadow(0 10px 20px rgba(255, 107, 157, 0.3));
+            animation: flotarRamo 3s ease-in-out infinite;
+            border-radius: 15px;
+        }
+
+        /* === CONTROLES Y BOTONES === */
+        .controles {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .btn-control {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 107, 157, 0.5);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            margin: 5px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            color: #ff6b9d;
+        }
+
+        .btn-control:hover {
+            background: rgba(255, 107, 157, 0.2);
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 107, 157, 0.4);
+        }
+
+        .btn-cartita {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(45deg, #ff6b9d, #c44569);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(196, 69, 105, 0.4);
+            z-index: 50;
+        }
+
+        .btn-cartita:hover {
+            transform: translateX(-50%) translateY(-3px);
+            box-shadow: 0 8px 25px rgba(196, 69, 105, 0.6);
+        }
+
+        /* === CARTITA ROMÁNTICA MEJORADA === */
+        .cartita {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 234, 167, 0.95));
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            z-index: 200;
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 107, 157, 0.3);
+        }
+
+        .cartita.visible {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .cartita-header {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2rem;
+            color: #8b2635;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .cartita-contenido {
+            max-height: 60vh;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .cartita-texto {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #5a5a5a;
+            text-align: center;
+            white-space: pre-line;
+        }
+
+        .btn-cerrar-cartita {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #8b2635;
+        }
+
+        /* === GALERÍA DE FOTOS MEJORADA === */
+        .galeria {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            z-index: 10;
+            position: relative;
+        }
+
+        .foto-polaroid {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px 15px 40px 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: rotate(var(--rotacion));
+            transition: all 0.3s ease;
+            cursor: move;
+            position: relative;
+            z-index: 20;
+        }
+
+        .foto-polaroid:hover {
+            transform: rotate(0deg) scale(1.05);
+            z-index: 30;
+        }
+
+        .foto-polaroid.dragging {
+            transform: rotate(0deg) scale(1.1);
+            z-index: 100;
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
+        }
+
+        .foto-polaroid img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 5px;
+            pointer-events: none;
+        }
+
+        /* === FOTOS CIRCULARES FLOTANTES === */
+        .foto-circular {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(255, 107, 157, 0.6);
+            box-shadow: 0 0 20px rgba(255, 107, 157, 0.3);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            z-index: 5;
+            animation: flotarSuave 4s ease-in-out infinite;
+        }
+
+        .foto-circular:hover {
+            transform: scale(1.3) rotate(10deg);
+        }
+
+        /* === CORAZONES Y TEXTO CAYENDO === */
+        .elemento-cayendo {
+            position: fixed;
+            pointer-events: none;
+            font-size: 20px;
+            z-index: 8;
+            animation: caer linear infinite;
+        }
+
+        .corazon-cayendo {
+            color: rgba(255, 107, 157, 0.7);
+            font-size: 25px;
+        }
+
+        .texto-cayendo {
+            color: rgba(255, 107, 157, 0.6);
+            font-family: 'Dancing Script', cursive;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* === MENSAJES INTERACTIVOS === */
+        .mensaje-interactivo {
+            position: fixed;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: 600;
+            pointer-events: none;
+            z-index: 50;
+            font-family: 'Dancing Script', cursive;
+            animation: mensajeFlotante 3s forwards;
+        }
+
+        /* === ANIMACIONES === */
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes shoot {
+            0% {
+                transform: translateX(-100px) translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(calc(100vw + 100px)) translateY(100px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes pulsoSuave {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes aparicionSuave {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes flotarRamo {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+
+        @keyframes flotarSuave {
+            0%, 100% { transform: translateY(0px); }
+            33% { transform: translateY(-15px); }
+            66% { transform: translateY(-5px); }
+        }
+
+        @keyframes caer {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(calc(100vh + 100px)) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes mensajeFlotante {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) translateY(0);
+            }
+            20% {
+                opacity: 1;
+                transform: scale(1) translateY(-30px);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.8) translateY(-100px);
+            }
+        }
+
+        @keyframes maquinaEscribir {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        .texto-maquina {
+            overflow: hidden;
+            border-right: 2px solid #8b2635;
+            width: 0;
+            animation: maquinaEscribir 0.5s steps(40) forwards;
+        }
+
+        /* === RESPONSIVO === */
+        @media (max-width: 768px) {
+            .mensaje-principal {
+                padding: 1rem;
+            }
+            
+            .galeria {
+                grid-template-columns: repeat(2, 1fr);
+                padding: 1rem;
+            }
+            
+            .cartita {
+                padding: 1.5rem;
+                margin: 20px;
+                max-height: 85vh;
+            }
+
+            .foto-circular {
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+        /* === SCROLLBAR PERSONALIZADO === */
+        .cartita-contenido::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .cartita-contenido::-webkit-scrollbar-track {
+            background: rgba(255, 107, 157, 0.1);
+            border-radius: 4px;
+        }
+
+        .cartita-contenido::-webkit-scrollbar-thumb {
+            background: rgba(255, 107, 157, 0.5);
+            border-radius: 4px;
+        }
+
+        .cartita-contenido::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 107, 157, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <!-- FONDO ESTRELLADO -->
+    <div class="stars" id="stars"></div>
+
+    <!-- PANTALLA DE INICIO -->
+    <div class="overlay-inicio" id="overlayInicio">
+        <div class="texto-inicio">Presiona en cualquier parte para iniciar 💖</div>
+    </div>
+
+    <!-- CONTROLES DE MÚSICA -->
+    <div class="controles">
+        <button class="btn-control" id="btnMusica" title="Pausar/Reproducir música">🎵</button>
+        <button class="btn-control" id="btnVolumen" title="Silenciar/Activar sonido">🔊</button>
+    </div>
+
+    <!-- MENSAJE PRINCIPAL -->
+    <div class="mensaje-principal">
+        <h1 class="titulo-aniversario" id="tituloAniversario">Feliz Aniversario 10 meses contigo 💕</h1>
+    </div>
+
+    <!-- RAMO REALISTA -->
+    <div class="contenedor-ramo">
+        <img class="ramo" src="tulipanes.png" alt="Ramo de tulipanes con un girasol al centro" onerror="this.src='https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=300&h=400&fit=crop'">
+    </div>
+
+    <!-- BOTÓN PARA MOSTRAR CARTITA -->
+    <button class="btn-cartita" id="btnCartita">💌 Leer Cartita Romántica</button>
+
+    <!-- CARTITA ROMÁNTICA (oculta por defecto) -->
+    <div class="cartita" id="cartita">
+        <button class="btn-cerrar-cartita" id="btnCerrarCartita">×</button>
+        <div class="cartita-header">Para ti, mi querida Cindy 💕</div>
+        <div class="cartita-contenido">
+            <div class="cartita-texto" id="textoMaquina">
+                <!-- TEXTO EDITABLE - Cambiar aquí tu mensaje romántico largo -->
+Hoy celebramos 10 meses juntos... y yo sigo sin entender cómo hice para que la niña más linda del mundo me quiera tanto 😌💖. El tiempo pasó rápido, pero desde que empezamos, todo se siente distinto: más bonito, más especial, más nuestro. ❤
+
+Pensando en todo lo que pasó en este tiempo, me lleno de muchas emociones. No todo fue fácil 🥹😔… tuvimos peleas, disgustos, discusiones que a veces nos dolieron y hasta momentos en que pensamos en dejarlo todo 🤧. Pero ¿sabes qué es lo más bonito? Que a pesar de todo, en medio de las tormentas, siempre elegimos buscarnos, hablar, entendernos y no soltar lo que tenemos. Eso demuestra que lo nuestro es real, fuerte y que vale la pena. 🌷💕
+
+También hay recuerdos hermosos que me hacen sonreír: tantas risas que solo nosotros entendemos, esas miraditas que nos derriten, las conversaciones que se nos hacen eternas, los momentos con nuestros amigos donde me encanta ver cómo brillamos juntos, y esos ensayos de baile que parecían más juego que práctica jsjsj… hasta cuando bailamos juntos, nos enamoramos mas... 😇✨ Cada recuerdo contigo es un tesoro que guardo como lo más valioso. 💖
+
+A veces pienso: “Wowww, ¡Cindy y yo ya tenemos 10 meses!” 🫣💗 y me emociono, porque me llena de orgullo saber que hemos sabido querernos, cuidarnos y apoyarnos cuando más lo necesitamos. Incluso en los momentos difíciles, siempre encontramos la manera de volver a estar el uno para el otro. 🥹💕
+
+Por todo eso y más, te doy las gracias, mi querida Cindy. Gracias por ser mi compañera, por hacerme sentir amado y por regalarme momentos hermosos en estos meses. Estoy orgulloso de lo que somos, de cómo crecemos juntos, y de saber que, pase lo que pase, siempre terminamos mirándonos con cariño y amor. 🥰
+
+Hoy que llegamos a los 10 meses, no solo celebramos la fecha, sino a nosotros: a Daniel y a Cindy, que empezaron con ilusión y hoy caminan con un amor que crece más fuerte cada día. 💗🌷
+Prometo seguir cuidándote, amándote, seguir siendo tu niño, tu Daniel un poco gracioso 🤭, pero sobre todo seguir dándote mi amor sincero. Porque mi felicidad está en ti. 💖
+
+Felices 10 meses, mi amor ✨
+Con mucho amor y cariño,
+Tu Daniel 💕🥰
+
+            </div>
+        </div>
+    </div>
+
+    <!-- GALERÍA DE FOTOS ESTILO POLAROID -->
+    <div class="galeria" id="galeria">
+        <!-- Las fotos se generan dinámicamente con JavaScript -->
+    </div>
+
+    <!-- MÚSICA DE FONDO -->
+    <audio id="musicaFondo" loop>
+        <source src="Perfect (spanish version) - Kevin & Karla.mp3" type="audio/mpeg">
+        Tu navegador no soporta audio HTML5.
+    </audio>
+
+    <script>
+        /* === CONFIGURACIÓN PERSONALIZABLE === */
+        
+        // MENSAJITOS interactivos con colores (EDITABLE)
+        const MENSAJES_INTERACTIVOS = [
+            { texto: "06-11-2024💖", color: "#ff6b9d" },
+            { texto: "Te amo", color: "#ffeaa7" },
+            { texto: "Eres mi todo", color: "#74b9ff" }, 
+            { texto: "Mi bonita", color: "#fd79a8" },
+            { texto: "Me encantas💕", color: "#55a3ff" },
+            { texto: "Mi amor", color: "#ff7675" },
+            { texto: "Juntos por siempre❤️", color: "#a29bfe" },
+            { texto: "Daniel y Cindy💗", color: "#fd79a8" }
+        ];
+
+
+        // URLs de FOTOS para la galería (CAMBIAR por tus fotos)
+        const FOTOS_GALERIA = [
+            "foto9.jpg",
+            "foto11.jpg", 
+            "foto3.jpg",
+            "foto8.jpg",
+            "foto5.jpg",
+            "foto7.jpg",
+            "foto12.jpg"
+        ];
+
+        // URLs de FOTOS CIRCULARES flotantes (personalizable separadamente)
+        const FOTOS_CIRCULARES = [
+            "foto1.jpg",
+            "foto4.jpg",
+            "foto6.jpg",
+            "foto5.jpg",
+            "foto2.jpg",
+            "foto10.jpg"
+        ];
+
+        /* === VARIABLES GLOBALES === */
+        let musicaIniciada = false;
+        let animacionesActivas = false;
+        let intervalos = [];
+        let dragElement = null;
+        let dragOffset = { x: 0, y: 0 };
+
+        // Elementos del DOM
+        const overlayInicio = document.getElementById('overlayInicio');
+        const musicaFondo = document.getElementById('musicaFondo');
+        const btnMusica = document.getElementById('btnMusica');
+        const btnVolumen = document.getElementById('btnVolumen');
+        const btnCartita = document.getElementById('btnCartita');
+        const cartita = document.getElementById('cartita');
+        const btnCerrarCartita = document.getElementById('btnCerrarCartita');
+        const textoMaquina = document.getElementById('textoMaquina');
+        const galeria = document.getElementById('galeria');
+        const stars = document.getElementById('stars');
+
+        /* === FUNCIÓN DE INICIO === */
+        function iniciarExperiencia() {
+            overlayInicio.classList.add('oculto');
+            
+            setTimeout(() => {
+                overlayInicio.style.display = 'none';
+            }, 800);
+
+            if (!musicaIniciada) {
+                musicaFondo.play().catch(e => {
+                    console.log('No se pudo reproducir la música automáticamente');
+                });
+                musicaIniciada = true;
+            }
+
+            if (!animacionesActivas) {
+                iniciarAnimaciones();
+                animacionesActivas = true;
+            }
+        }
+
+        /* === CREAR FONDO ESTRELLADO === */
+        function crearFondoEstrellado() {
+            // Crear estrellas parpadeantes
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = Math.random() * 3 + 1 + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDelay = Math.random() * 3 + 's';
+                stars.appendChild(star);
+            }
+
+            // Crear estrellas fugaces
+            setInterval(() => {
+                const shootingStar = document.createElement('div');
+                shootingStar.className = 'shooting-star';
+                shootingStar.style.top = Math.random() * 50 + '%';
+                shootingStar.style.left = '-100px';
+                shootingStar.style.width = Math.random() * 100 + 50 + 'px';
+                stars.appendChild(shootingStar);
+
+                setTimeout(() => {
+                    if (shootingStar.parentNode) {
+                        shootingStar.parentNode.removeChild(shootingStar);
+                    }
+                }, 3000);
+            }, 8000);
+        }
+
+        /* === FUNCIÓN PARA INICIAR TODAS LAS ANIMACIONES === */
+        function iniciarAnimaciones() {
+            crearFondoEstrellado();
+            generarGaleria();
+            
+            // Corazones y texto cayendo
+            intervalos.push(setInterval(crearElementoCayendo, 800));
+            
+            // Fotos circulares flotantes
+            intervalos.push(setInterval(crearFotoCircular, 5000));
+            
+            // Crear elementos iniciales
+            for(let i = 0; i < 15; i++) {
+                setTimeout(() => crearElementoCayendo(), Math.random() * 3000);
+            }
+            
+            for(let i = 0; i < 5; i++) {
+                setTimeout(() => crearFotoCircular(), Math.random() * 2000);
+            }
+        }
+
+        /* === GALERÍA DE FOTOS DRAGGABLE === */
+        function generarGaleria() {
+            galeria.innerHTML = '';
+            
+            FOTOS_GALERIA.forEach((url, index) => {
+                const polaroid = document.createElement('div');
+                polaroid.className = 'foto-polaroid';
+                polaroid.style.setProperty('--rotacion', `${Math.random() * 10 - 5}deg`);
+                
+                polaroid.innerHTML = `
+                    <img src="${url}" alt="Foto de recuerdo ${index + 1}" loading="lazy">
+                `;
+                
+                // Hacer draggable
+                polaroid.addEventListener('mousedown', iniciarDrag);
+                polaroid.addEventListener('touchstart', iniciarDrag);
+                
+                galeria.appendChild(polaroid);
+            });
+        }
+
+        /* === SISTEMA DE DRAG AND DROP === */
+        function iniciarDrag(e) {
+            e.preventDefault();
+            dragElement = e.currentTarget;
+            dragElement.classList.add('dragging');
+            
+            const rect = dragElement.getBoundingClientRect();
+            const clientX = e.clientX || e.touches[0].clientX;
+            const clientY = e.clientY || e.touches[0].clientY;
+            
+            dragOffset.x = clientX - rect.left;
+            dragOffset.y = clientY - rect.top;
+            
+            dragElement.style.position = 'fixed';
+            dragElement.style.zIndex = '1000';
+            
+            document.addEventListener('mousemove', moverElemento);
+            document.addEventListener('touchmove', moverElemento);
+            document.addEventListener('mouseup', finalizarDrag);
+            document.addEventListener('touchend', finalizarDrag);
+        }
+
+        function moverElemento(e) {
+            if (!dragElement) return;
+            
+            const clientX = e.clientX || e.touches[0].clientX;
+            const clientY = e.clientY || e.touches[0].clientY;
+            
+            dragElement.style.left = clientX - dragOffset.x + 'px';
+            dragElement.style.top = clientY - dragOffset.y + 'px';
+        }
+
+        function finalizarDrag() {
+            if (dragElement) {
+                dragElement.classList.remove('dragging');
+                dragElement = null;
+            }
+            
+            document.removeEventListener('mousemove', moverElemento);
+            document.removeEventListener('touchmove', moverElemento);
+            document.removeEventListener('mouseup', finalizarDrag);
+            document.removeEventListener('touchend', finalizarDrag);
+        }
+
+        /* === ELEMENTOS CAYENDO (CORAZONES Y TEXTO) === */
+        function crearElementoCayendo() {
+            const elemento = document.createElement('div');
+            elemento.className = 'elemento-cayendo';
+            
+            if (Math.random() > 0.3) {
+                // Corazón
+                elemento.innerHTML = ['💕', '💖', '💗', '💘', '❤️'][Math.floor(Math.random() * 5)];
+                elemento.classList.add('corazon-cayendo');
+            } else {
+                // Texto "C y D"
+                elemento.innerHTML = 'C y D';
+                elemento.classList.add('texto-cayendo');
+            }
+            
+            elemento.style.left = Math.random() * window.innerWidth + 'px';
+            elemento.style.top = '-50px';
+            elemento.style.animationDuration = Math.random() * 3 + 5 + 's';
+            
+            document.body.appendChild(elemento);
+
+            setTimeout(() => {
+                if (elemento.parentNode) {
+                    elemento.parentNode.removeChild(elemento);
+                }
+            }, 8000);
+        }
+
+        /* === FOTOS CIRCULARES FLOTANTES === */
+        function crearFotoCircular() {
+            if (FOTOS_CIRCULARES.length === 0) return;
+            
+            const img = document.createElement('img');
+            img.className = 'foto-circular';
+            img.src = FOTOS_CIRCULARES[Math.floor(Math.random() * FOTOS_CIRCULARES.length)];
+            img.alt = 'Foto circular flotante';
+            
+            img.style.left = Math.random() * (window.innerWidth - 60) + 'px';
+            img.style.top = Math.random() * (window.innerHeight - 60) + 'px';
+            img.style.animationDelay = Math.random() * 2 + 's';
+            
+            document.body.appendChild(img);
+
+            setTimeout(() => {
+                if (img.parentNode) {
+                    img.style.opacity = '0';
+                    img.style.transition = 'opacity 1s';
+                    setTimeout(() => {
+                        if (img.parentNode) {
+                            img.parentNode.removeChild(img);
+                        }
+                    }, 1000);
+                }
+            }, 15000);
+        }
+
+        /* === MENSAJES INTERACTIVOS === */
+        function crearMensajeInteractivo(x, y) {
+            const mensaje = document.createElement('div');
+            mensaje.className = 'mensaje-interactivo';
+            
+            const mensajeData = MENSAJES_INTERACTIVOS[Math.floor(Math.random() * MENSAJES_INTERACTIVOS.length)];
+            mensaje.textContent = mensajeData.texto;
+            mensaje.style.color = mensajeData.color;
+            mensaje.style.textShadow = `0 0 10px ${mensajeData.color}50`;
+            
+            mensaje.style.left = (x - 50) + 'px';
+            mensaje.style.top = (y - 30) + 'px';
+            
+            document.body.appendChild(mensaje);
+
+            setTimeout(() => {
+                if (mensaje.parentNode) {
+                    mensaje.parentNode.removeChild(mensaje);
+                }
+            }, 3000);
+        }
+
+        /* === EFECTO MÁQUINA DE ESCRIBIR MEJORADO === */
+        function efectoMaquinaEscribirCompleto(elemento, texto, velocidad = 30) {
+            elemento.innerHTML = '';
+            elemento.style.borderRight = '2px solid #8b2635';
+            
+            const lineas = texto.split('\n');
+            let lineaActual = 0;
+            let caracterActual = 0;
+            
+            function escribirCaracter() {
+                if (lineaActual < lineas.length) {
+                    if (caracterActual < lineas[lineaActual].length) {
+                        if (caracterActual === 0 && lineaActual > 0) {
+                            elemento.innerHTML += '\n';
+                        }
+                        elemento.innerHTML += lineas[lineaActual].charAt(caracterActual);
+                        caracterActual++;
+                        setTimeout(escribirCaracter, velocidad);
+                    } else {
+                        // Pasar a la siguiente línea
+                        lineaActual++;
+                        caracterActual = 0;
+                        if (lineaActual < lineas.length) {
+                            elemento.innerHTML += '\n';
+                        }
+                        setTimeout(escribirCaracter, velocidad * 2); // Pausa más larga entre líneas
+                    }
+                } else {
+                    // Terminar - remover cursor
+                    setTimeout(() => {
+                        elemento.style.borderRight = 'none';
+                    }, 1000);
+                }
+            }
+            escribirCaracter();
+        }
+
+        /* === BURST DE CORAZONES AL HACER CLICK === */
+        function crearBurstCorazones(x, y) {
+            const cantidadCorazones = 8;
+            
+            for (let i = 0; i < cantidadCorazones; i++) {
+                setTimeout(() => {
+                    const corazon = document.createElement('div');
+                    corazon.innerHTML = ['💕', '💖', '💗', '💘', '❤️'][Math.floor(Math.random() * 5)];
+                    corazon.style.position = 'fixed';
+                    corazon.style.left = x + 'px';
+                    corazon.style.top = y + 'px';
+                    corazon.style.fontSize = '25px';
+                    corazon.style.pointerEvents = 'none';
+                    corazon.style.zIndex = '100';
+                    corazon.style.color = '#ff6b9d';
+                    corazon.style.textShadow = '0 0 10px rgba(255, 107, 157, 0.8)';
+                    
+                    // Dirección aleatoria en círculo
+                    const angle = (Math.PI * 2 * i) / cantidadCorazones;
+                    const velocity = 60;
+                    const finalX = x + Math.cos(angle) * velocity;
+                    const finalY = y + Math.sin(angle) * velocity;
+                    
+                    // Animación personalizada
+                    corazon.animate([
+                        { transform: 'translate(0, 0) scale(0)', opacity: 1 },
+                        { transform: `translate(${finalX - x}px, ${finalY - y}px) scale(1.2)`, opacity: 1 },
+                        { transform: `translate(${(finalX - x) * 1.5}px, ${(finalY - y) * 1.5}px) scale(0)`, opacity: 0 }
+                    ], {
+                        duration: 1500,
+                        easing: 'ease-out'
+                    });
+                    
+                    document.body.appendChild(corazon);
+                    
+                    setTimeout(() => {
+                        if (corazon.parentNode) {
+                            corazon.parentNode.removeChild(corazon);
+                        }
+                    }, 1500);
+                }, i * 100);
+            }
+        }
+
+        /* === EVENT LISTENERS === */
+        
+        // Pantalla de inicio
+        overlayInicio.addEventListener('click', iniciarExperiencia);
+
+        // Clicks interactivos - crear mensajes y burst de corazones
+        document.addEventListener('click', function(e) {
+            if (!animacionesActivas) return;
+            
+            if (!e.target.closest('.controles') && 
+                !e.target.closest('.cartita') && 
+                !e.target.closest('.btn-cartita') &&
+                !e.target.closest('.foto-polaroid')) {
+                
+                crearMensajeInteractivo(e.clientX, e.clientY);
+                crearBurstCorazones(e.clientX, e.clientY);
+            }
+        });
+
+        // Toques en móvil
+        document.addEventListener('touchstart', function(e) {
+            if (!animacionesActivas) return;
+            
+            if (!e.target.closest('.controles') && 
+                !e.target.closest('.cartita') && 
+                !e.target.closest('.btn-cartita') &&
+                !e.target.closest('.foto-polaroid')) {
+                
+                const touch = e.touches[0];
+                crearMensajeInteractivo(touch.clientX, touch.clientY);
+                crearBurstCorazones(touch.clientX, touch.clientY);
+            }
+        });
+
+        // Controles de música
+        btnMusica.addEventListener('click', () => {
+            if (musicaFondo.paused) {
+                musicaFondo.play();
+                btnMusica.textContent = '🎵';
+            } else {
+                musicaFondo.pause();
+                btnMusica.textContent = '⏸️';
+            }
+        });
+
+        btnVolumen.addEventListener('click', () => {
+            musicaFondo.muted = !musicaFondo.muted;
+            btnVolumen.textContent = musicaFondo.muted ? '🔇' : '🔊';
+        });
+
+        // Cartita romántica
+        btnCartita.addEventListener('click', () => {
+            cartita.classList.add('visible');
+            const texto = textoMaquina.textContent.trim();
+            efectoMaquinaEscribirCompleto(textoMaquina, texto, 40);
+        });
+
+        btnCerrarCartita.addEventListener('click', () => {
+            cartita.classList.remove('visible');
+        });
+
+        // Cerrar cartita al hacer clic fuera
+        cartita.addEventListener('click', (e) => {
+            if (e.target === cartita) {
+                cartita.classList.remove('visible');
+            }
+        });
+
+        /* === INICIALIZACIÓN AUTOMÁTICA === */
+        
+        // Crear elementos de fondo inmediatamente
+        window.addEventListener('DOMContentLoaded', () => {
+            crearFondoEstrellado();
+            
+            // Crear algunos elementos cayendo desde el inicio
+            for(let i = 0; i < 5; i++) {
+                setTimeout(() => crearElementoCayendo(), Math.random() * 2000);
+            }
+        });
+
+        /* === OPTIMIZACIÓN DE PERFORMANCE === */
+        
+        // Limpiar intervalos
+        window.addEventListener('beforeunload', () => {
+            intervalos.forEach(interval => clearInterval(interval));
+        });
+
+        // Pausar/reanudar según visibilidad
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                if (musicaIniciada) musicaFondo.pause();
+            } else {
+                if (musicaIniciada && !musicaFondo.paused) {
+                    musicaFondo.play().catch(e => console.log('Error al reanudar música'));
+                }
+            }
+        });
+
+        /* === PREVENIR SELECCIÓN DE TEXTO EN DRAG === */
+        document.addEventListener('selectstart', function(e) {
+            if (dragElement) {
+                e.preventDefault();
+            }
+        });
+
+        /* === RESPONSIVE TOUCH EVENTS === */
+        document.addEventListener('touchmove', function(e) {
+            if (dragElement) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+    </script>
+</body>
+</html>
