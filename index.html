@@ -130,34 +130,6 @@
             border-radius: 15px;
         }
 
-        /* === CONTROLES Y BOTONES === */
-        .controles {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 100;
-        }
-
-        .btn-control {
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 107, 157, 0.5);
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            margin: 5px;
-            cursor: pointer;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            color: #ff6b9d;
-        }
-
-        .btn-control:hover {
-            background: rgba(255, 107, 157, 0.2);
-            transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(255, 107, 157, 0.4);
-        }
-
         .btn-cartita {
             position: fixed;
             bottom: 30px;
@@ -222,8 +194,28 @@
             font-size: 1.1rem;
             line-height: 1.8;
             color: #5a5a5a;
-            text-align: center;
-            white-space: pre-line;
+            text-align: left;
+            min-height: 20px; /* Asegurar altura mínima */
+        }
+
+        .cartita-texto p {
+            margin-bottom: 1.2rem;
+            opacity: 0; /* Inicialmente ocultos */
+        }
+
+        .cartita-texto p:last-child {
+            margin-bottom: 0;
+        }
+
+        .cartita-texto p.escribiendo {
+            opacity: 1;
+            border-right: 2px solid #8b2635;
+            animation: parpadearCursor 1s infinite;
+        }
+
+        .cartita-texto p.completado {
+            opacity: 1;
+            border-right: none;
         }
 
         .btn-cerrar-cartita {
@@ -396,16 +388,9 @@
             }
         }
 
-        @keyframes maquinaEscribir {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-
-        .texto-maquina {
-            overflow: hidden;
-            border-right: 2px solid #8b2635;
-            width: 0;
-            animation: maquinaEscribir 0.5s steps(40) forwards;
+        @keyframes parpadearCursor {
+            0%, 50% { border-right-color: #8b2635; }
+            51%, 100% { border-right-color: transparent; }
         }
 
         /* === RESPONSIVO === */
@@ -460,12 +445,6 @@
         <div class="texto-inicio">Presiona en cualquier parte para iniciar 💖</div>
     </div>
 
-    <!-- CONTROLES DE MÚSICA -->
-    <div class="controles">
-        <button class="btn-control" id="btnMusica" title="Pausar/Reproducir música">🎵</button>
-        <button class="btn-control" id="btnVolumen" title="Silenciar/Activar sonido">🔊</button>
-    </div>
-
     <!-- MENSAJE PRINCIPAL -->
     <div class="mensaje-principal">
         <h1 class="titulo-aniversario" id="tituloAniversario">Feliz Aniversario 10 meses contigo 💕</h1>
@@ -477,32 +456,15 @@
     </div>
 
     <!-- BOTÓN PARA MOSTRAR CARTITA -->
-    <button class="btn-cartita" id="btnCartita">💌 Leer Cartita Romántica</button>
+    <button class="btn-cartita" id="btnCartita">💌 Carta para Cindy 💗 </button>
 
     <!-- CARTITA ROMÁNTICA (oculta por defecto) -->
     <div class="cartita" id="cartita">
         <button class="btn-cerrar-cartita" id="btnCerrarCartita">×</button>
         <div class="cartita-header">Para ti, mi querida Cindy 💕</div>
         <div class="cartita-contenido">
-            <div class="cartita-texto" id="textoMaquina">
-                <!-- TEXTO EDITABLE - Cambiar aquí tu mensaje romántico largo -->
-Hoy celebramos 10 meses juntos... y yo sigo sin entender cómo hice para que la niña más linda del mundo me quiera tanto 😌💖. El tiempo pasó rápido, pero desde que empezamos, todo se siente distinto: más bonito, más especial, más nuestro. ❤
-
-Pensando en todo lo que pasó en este tiempo, me lleno de muchas emociones. No todo fue fácil 🥹😔… tuvimos peleas, disgustos, discusiones que a veces nos dolieron y hasta momentos en que pensamos en dejarlo todo 🤧. Pero ¿sabes qué es lo más bonito? Que a pesar de todo, en medio de las tormentas, siempre elegimos buscarnos, hablar, entendernos y no soltar lo que tenemos. Eso demuestra que lo nuestro es real, fuerte y que vale la pena. 🌷💕
-
-También hay recuerdos hermosos que me hacen sonreír: tantas risas que solo nosotros entendemos, esas miraditas que nos derriten, las conversaciones que se nos hacen eternas, los momentos con nuestros amigos donde me encanta ver cómo brillamos juntos, y esos ensayos de baile que parecían más juego que práctica jsjsj… hasta cuando bailamos juntos, nos enamoramos mas... 😇✨ Cada recuerdo contigo es un tesoro que guardo como lo más valioso. 💖
-
-A veces pienso: “Wowww, ¡Cindy y yo ya tenemos 10 meses!” 🫣💗 y me emociono, porque me llena de orgullo saber que hemos sabido querernos, cuidarnos y apoyarnos cuando más lo necesitamos. Incluso en los momentos difíciles, siempre encontramos la manera de volver a estar el uno para el otro. 🥹💕
-
-Por todo eso y más, te doy las gracias, mi querida Cindy. Gracias por ser mi compañera, por hacerme sentir amado y por regalarme momentos hermosos en estos meses. Estoy orgulloso de lo que somos, de cómo crecemos juntos, y de saber que, pase lo que pase, siempre terminamos mirándonos con cariño y amor. 🥰
-
-Hoy que llegamos a los 10 meses, no solo celebramos la fecha, sino a nosotros: a Daniel y a Cindy, que empezaron con ilusión y hoy caminan con un amor que crece más fuerte cada día. 💗🌷
-Prometo seguir cuidándote, amándote, seguir siendo tu niño, tu Daniel un poco gracioso 🤭, pero sobre todo seguir dándote mi amor sincero. Porque mi felicidad está en ti. 💖
-
-Felices 10 meses, mi amor ✨
-Con mucho amor y cariño,
-Tu Daniel 💕🥰
-
+            <div class="cartita-texto" id="textoMensaje">
+                <!-- El contenido se cargará dinámicamente -->
             </div>
         </div>
     </div>
@@ -512,7 +474,7 @@ Tu Daniel 💕🥰
         <!-- Las fotos se generan dinámicamente con JavaScript -->
     </div>
 
-    <!-- MÚSICA DE FONDO -->
+    <!-- MÚSICA DE FONDO (sin controles visibles) -->
     <audio id="musicaFondo" loop>
         <source src="Perfect (spanish version) - Kevin & Karla.mp3" type="audio/mpeg">
         Tu navegador no soporta audio HTML5.
@@ -532,7 +494,6 @@ Tu Daniel 💕🥰
             { texto: "Juntos por siempre❤️", color: "#a29bfe" },
             { texto: "Daniel y Cindy💗", color: "#fd79a8" }
         ];
-
 
         // URLs de FOTOS para la galería (CAMBIAR por tus fotos)
         const FOTOS_GALERIA = [
@@ -555,22 +516,42 @@ Tu Daniel 💕🥰
             "foto10.jpg"
         ];
 
+        // CONTENIDO DE LA CARTA (separado por párrafos)
+        const CONTENIDO_CARTA = [
+            "Hoy celebramos 10 meses juntos... y yo sigo sin entender cómo hice para que la niña más linda del mundo me quiera tanto 😌💖. El tiempo pasó rápido, pero desde que empezamos, todo se siente distinto: más bonito, más especial, más nuestro. ❤",
+            
+            "Pensando en todo lo que pasó en este tiempo, me lleno de muchas emociones. No todo fue fácil 🥹😔… tuvimos peleas, disgustos, discusiones que a veces nos dolieron y hasta momentos en que pensamos en dejarlo todo 🤧. Pero ¿sabes qué es lo más bonito? Que a pesar de todo, en medio de las tormentas, siempre elegimos buscarnos, hablar, entendernos y no soltar lo que tenemos. Eso demuestra que lo nuestro es real, fuerte y que vale la pena. 🌷💕",
+            
+            "También hay recuerdos hermosos que me hacen sonreír: tantas risas que solo nosotros entendemos, esas miraditas que nos derriten, las conversaciones que se nos hacen eternas, los momentos con nuestros amigos donde me encanta ver cómo brillamos juntos, y esos ensayos de baile que parecían más juego que práctica jsjsj… hasta cuando bailamos juntos, nos enamoramos mas... 😇✨ Cada recuerdo contigo es un tesoro que guardo como lo más valioso. 💖",
+            
+            "A veces pienso: \"Wowww, ¡Cindy y yo ya tenemos 10 meses!\" 🫣💗 y me emociono, porque me llena de orgullo saber que hemos sabido querernos, cuidarnos y apoyarnos cuando más lo necesitamos. Incluso en los momentos difíciles, siempre encontramos la manera de volver a estar el uno para el otro. 🥹💕",
+            
+            "Por todo eso y más, te doy las gracias, mi querida Cindy. Gracias por ser mi compañera, por hacerme sentir amado y por regalarme momentos hermosos en estos meses. Estoy orgulloso de lo que somos, de cómo crecemos juntos, y de saber que, pase lo que pase, siempre terminamos mirándonos con cariño y amor. 🥰",
+            
+            "Hoy que llegamos a los 10 meses, no solo celebramos la fecha, sino a nosotros: a Daniel y a Cindy, que empezaron con ilusión y hoy caminan con un amor que crece más fuerte cada día. 💗🌷 Prometo seguir cuidándote, amándote, seguir siendo tu niño, tu Daniel un poco gracioso 🤭, pero sobre todo seguir dándote mi amor sincero. Porque mi felicidad está en ti. 💖",
+            
+            "<strong>Felices 10 meses, mi amor ✨<br>Con mucho amor y cariño,<br>Tu Daniel 💕🥰</strong>"
+        ];
+
         /* === VARIABLES GLOBALES === */
         let musicaIniciada = false;
         let animacionesActivas = false;
         let intervalos = [];
         let dragElement = null;
         let dragOffset = { x: 0, y: 0 };
+        
+        // Variables para el efecto máquina de escribir
+        let intervalosEscritura = [];
+        let timeoutsEscritura = [];
+        let escrituraEnProceso = false;
 
         // Elementos del DOM
         const overlayInicio = document.getElementById('overlayInicio');
         const musicaFondo = document.getElementById('musicaFondo');
-        const btnMusica = document.getElementById('btnMusica');
-        const btnVolumen = document.getElementById('btnVolumen');
         const btnCartita = document.getElementById('btnCartita');
         const cartita = document.getElementById('cartita');
         const btnCerrarCartita = document.getElementById('btnCerrarCartita');
-        const textoMaquina = document.getElementById('textoMaquina');
+        const textoMensaje = document.getElementById('textoMensaje');
         const galeria = document.getElementById('galeria');
         const stars = document.getElementById('stars');
 
@@ -582,9 +563,11 @@ Tu Daniel 💕🥰
                 overlayInicio.style.display = 'none';
             }, 800);
 
+            // Iniciar música automáticamente
             if (!musicaIniciada) {
+                musicaFondo.volume = 0.7; // Volumen al 70%
                 musicaFondo.play().catch(e => {
-                    console.log('No se pudo reproducir la música automáticamente');
+                    console.log('No se pudo reproducir la música automáticamente:', e);
                 });
                 musicaIniciada = true;
             }
@@ -724,6 +707,7 @@ Tu Daniel 💕🥰
             } else {
                 // Texto "C y D"
                 elemento.innerHTML = 'C y D';
+                elemento.innerHTML = 'C y D';
                 elemento.classList.add('texto-cayendo');
             }
             
@@ -790,41 +774,106 @@ Tu Daniel 💕🥰
             }, 3000);
         }
 
-        /* === EFECTO MÁQUINA DE ESCRIBIR MEJORADO === */
-        function efectoMaquinaEscribirCompleto(elemento, texto, velocidad = 30) {
-            elemento.innerHTML = '';
-            elemento.style.borderRight = '2px solid #8b2635';
+        /* === LIMPIAR EFECTO MÁQUINA DE  === */
+        function limpiarEfectoEscritura() {
+            // Detener todos los intervalos y timeouts
+            intervalosEscritura.forEach(interval => clearInterval(interval));
+            timeoutsEscritura.forEach(timeout => clearTimeout(timeout));
             
-            const lineas = texto.split('\n');
-            let lineaActual = 0;
-            let caracterActual = 0;
+            // Limpiar arrays
+            intervalosEscritura = [];
+            timeoutsEscritura = [];
             
-            function escribirCaracter() {
-                if (lineaActual < lineas.length) {
-                    if (caracterActual < lineas[lineaActual].length) {
-                        if (caracterActual === 0 && lineaActual > 0) {
-                            elemento.innerHTML += '\n';
-                        }
-                        elemento.innerHTML += lineas[lineaActual].charAt(caracterActual);
-                        caracterActual++;
-                        setTimeout(escribirCaracter, velocidad);
-                    } else {
-                        // Pasar a la siguiente línea
-                        lineaActual++;
-                        caracterActual = 0;
-                        if (lineaActual < lineas.length) {
-                            elemento.innerHTML += '\n';
-                        }
-                        setTimeout(escribirCaracter, velocidad * 2); // Pausa más larga entre líneas
-                    }
-                } else {
-                    // Terminar - remover cursor
-                    setTimeout(() => {
-                        elemento.style.borderRight = 'none';
-                    }, 1000);
-                }
+            // Resetear estado
+            escrituraEnProceso = false;
+            
+            // Limpiar el contenido del texto
+            textoMensaje.innerHTML = '';
+        }
+
+        /* === EFECTO MÁQUINA DE ESCRIBIR CORREGIDO === */
+        function efectoMaquinaEscribir() {
+            // Si ya hay una escritura en proceso, detenerla
+            if (escrituraEnProceso) {
+                limpiarEfectoEscritura();
             }
-            escribirCaracter();
+            
+            escrituraEnProceso = true;
+            
+            // Limpiar contenido previo
+            textoMensaje.innerHTML = '';
+            
+            // Crear elementos de párrafo vacíos
+            CONTENIDO_CARTA.forEach(() => {
+                const p = document.createElement('p');
+                p.innerHTML = ''; // Párrafo vacío
+                p.style.opacity = '0'; // Inicialmente invisible
+                textoMensaje.appendChild(p);
+            });
+            
+            const parrafos = textoMensaje.querySelectorAll('p');
+            let parrafoActual = 0;
+            
+            // Función para escribir un párrafo letra por letra
+            function escribirParrafo(indiceParrafo) {
+                if (indiceParrafo >= CONTENIDO_CARTA.length || !escrituraEnProceso) {
+                    return; // Terminado o cancelado
+                }
+                
+                const parrafo = parrafos[indiceParrafo];
+                const textoCompleto = CONTENIDO_CARTA[indiceParrafo];
+                
+                // Hacer visible el párrafo y añadir clase de escritura
+                parrafo.style.opacity = '1';
+                parrafo.classList.add('escribiendo');
+                parrafo.innerHTML = '';
+                
+                let caracterActual = 0;
+                
+                // Función para escribir cada carácter
+                function escribirCaracter() {
+                    if (!escrituraEnProceso) return; // Cancelado
+                    
+                    if (caracterActual < textoCompleto.length) {
+                        // Manejar etiquetas HTML completas
+                        if (textoCompleto.charAt(caracterActual) === '<') {
+                            let finTag = caracterActual;
+                            while (finTag < textoCompleto.length && textoCompleto.charAt(finTag) !== '>') {
+                                finTag++;
+                            }
+                            // Agregar la etiqueta completa
+                            parrafo.innerHTML += textoCompleto.substring(caracterActual, finTag + 1);
+                            caracterActual = finTag + 1;
+                        } else {
+                            // Agregar carácter normal
+                            parrafo.innerHTML += textoCompleto.charAt(caracterActual);
+                            caracterActual++;
+                        }
+                        
+                        // Programar el siguiente carácter
+                        const timeout = setTimeout(escribirCaracter, 50); // 50ms entre caracteres
+                        timeoutsEscritura.push(timeout);
+                    } else {
+                        // Párrafo terminado
+                        parrafo.classList.remove('escribiendo');
+                        parrafo.classList.add('completado');
+                        
+                        // Pausa antes del siguiente párrafo
+                        const timeout = setTimeout(() => {
+                            if (escrituraEnProceso) {
+                                escribirParrafo(indiceParrafo + 1);
+                            }
+                        }, 300); // 300ms entre párrafos
+                        timeoutsEscritura.push(timeout);
+                    }
+                }
+                
+                // Iniciar escritura del párrafo
+                escribirCaracter();
+            }
+            
+            // Iniciar con el primer párrafo
+            escribirParrafo(0);
         }
 
         /* === BURST DE CORAZONES AL HACER CLICK === */
@@ -880,8 +929,7 @@ Tu Daniel 💕🥰
         document.addEventListener('click', function(e) {
             if (!animacionesActivas) return;
             
-            if (!e.target.closest('.controles') && 
-                !e.target.closest('.cartita') && 
+            if (!e.target.closest('.cartita') && 
                 !e.target.closest('.btn-cartita') &&
                 !e.target.closest('.foto-polaroid')) {
                 
@@ -894,8 +942,7 @@ Tu Daniel 💕🥰
         document.addEventListener('touchstart', function(e) {
             if (!animacionesActivas) return;
             
-            if (!e.target.closest('.controles') && 
-                !e.target.closest('.cartita') && 
+            if (!e.target.closest('.cartita') && 
                 !e.target.closest('.btn-cartita') &&
                 !e.target.closest('.foto-polaroid')) {
                 
@@ -905,37 +952,26 @@ Tu Daniel 💕🥰
             }
         });
 
-        // Controles de música
-        btnMusica.addEventListener('click', () => {
-            if (musicaFondo.paused) {
-                musicaFondo.play();
-                btnMusica.textContent = '🎵';
-            } else {
-                musicaFondo.pause();
-                btnMusica.textContent = '⏸️';
-            }
-        });
-
-        btnVolumen.addEventListener('click', () => {
-            musicaFondo.muted = !musicaFondo.muted;
-            btnVolumen.textContent = musicaFondo.muted ? '🔇' : '🔊';
-        });
-
-        // Cartita romántica
+        // CARTITA ROMÁNTICA - ABRIR
         btnCartita.addEventListener('click', () => {
             cartita.classList.add('visible');
-            const texto = textoMaquina.textContent.trim();
-            efectoMaquinaEscribirCompleto(textoMaquina, texto, 40);
+            // Iniciar efecto máquina de escribir desde cero
+            efectoMaquinaEscribir();
         });
 
+        // CARTITA ROMÁNTICA - CERRAR
         btnCerrarCartita.addEventListener('click', () => {
             cartita.classList.remove('visible');
+            // Limpiar completamente el efecto de escritura
+            limpiarEfectoEscritura();
         });
 
         // Cerrar cartita al hacer clic fuera
         cartita.addEventListener('click', (e) => {
             if (e.target === cartita) {
                 cartita.classList.remove('visible');
+                // Limpiar completamente el efecto de escritura
+                limpiarEfectoEscritura();
             }
         });
 
@@ -951,22 +987,40 @@ Tu Daniel 💕🥰
             }
         });
 
-        /* === OPTIMIZACIÓN DE PERFORMANCE === */
-        
-        // Limpiar intervalos
-        window.addEventListener('beforeunload', () => {
-            intervalos.forEach(interval => clearInterval(interval));
+        /* === MÚSICA CONTINUA - Mantener reproduciendo === */
+        // Configuración para que la música siga sonando
+        musicaFondo.addEventListener('ended', function() {
+            this.currentTime = 0;
+            this.play();
         });
 
-        // Pausar/reanudar según visibilidad
+        // Intentar mantener la música reproduciendo cuando se regresa al tab
         document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                if (musicaIniciada) musicaFondo.pause();
-            } else {
-                if (musicaIniciada && !musicaFondo.paused) {
-                    musicaFondo.play().catch(e => console.log('Error al reanudar música'));
+            if (!document.hidden && musicaIniciada) {
+                // Cuando regresa el foco a la ventana, reanudar música
+                if (musicaFondo.paused) {
+                    musicaFondo.play().catch(e => {
+                        console.log('Error al reanudar música:', e);
+                    });
                 }
             }
+        });
+
+        // También manejar el evento de foco de la ventana
+        window.addEventListener('focus', () => {
+            if (musicaIniciada && musicaFondo.paused) {
+                musicaFondo.play().catch(e => {
+                    console.log('Error al reanudar música en focus:', e);
+                });
+            }
+        });
+
+        /* === OPTIMIZACIÓN DE PERFORMANCE === */
+        
+        // Limpiar intervalos al cerrar
+        window.addEventListener('beforeunload', () => {
+            intervalos.forEach(interval => clearInterval(interval));
+            limpiarEfectoEscritura();
         });
 
         /* === PREVENIR SELECCIÓN DE TEXTO EN DRAG === */
